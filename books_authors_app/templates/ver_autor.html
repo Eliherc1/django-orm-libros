@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authors</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="mt-5">
+            <h1>{{autores}}</h1>
+            <h2>ID: {{autores.id}}</h2>
+        </div>
+        <h3>Notas</h3>
+        <div class="card col-6 mt-3">
+            <p>{{autores.notas}}</p>
+        </div>
+        <div class="mt-5">
+            <h4>Libros:</h4>
+            {% for l in libros %}
+            <ul>
+                <li>{{l.title}} <a class="badge bg-info text-dark" href="/eliminar_libro/{{l.id}}">Eliminar</a></li>
+            </ul>
+            {%endfor%}
+        </div>
+        <div class="mt-5">
+            <form action='/asociar_libro/{{autores.id}}' method='post'>
+                {% csrf_token %}
+                <select class="form-select" name="libro_a" aria-label="Default select example">
+                    <option selected>Seleccione Libro</option>
+                    {%for b in lib%}
+                    <option value="{{b.id}}">{{b.title}}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="btn btn-success mt-5">Agregar Libro</button>
+            </form>
+
+        </div>
+        <div class="col-4 mt-5">
+            <a href="/authors" class="btn btn-dark" type="button">Volver</a>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>
